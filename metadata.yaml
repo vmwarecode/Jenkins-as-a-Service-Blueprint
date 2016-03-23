@@ -1,0 +1,12 @@
+name: "auto-generated-pkg-a6ac41ed-30c1-4412-b101-32e77aefa2c0"
+productVersion: "7.0.0-SNAPSHOT"
+data:
+- locator: "composite-blueprint/Jenkins.yaml"
+  name: "Jenkins"
+  description: "Jenkins"
+  dependencies:
+  - "software-component/Software.Jenkins.yaml"
+- locator: "software-component/Software.Jenkins.yaml"
+  name: "Jenkins"
+  description: "Installs the latest version of Jenkins on RHEL/CENTOS"
+exportTime: "2016-03-23T00:29:47.285Z"

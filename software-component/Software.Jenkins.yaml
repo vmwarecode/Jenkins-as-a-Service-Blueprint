@@ -1,0 +1,86 @@
+'@type': "SoftwareComponentType"
+createdDate: "2016-03-22T23:41:39.016Z"
+lastUpdated: "2016-03-22T23:46:55.706Z"
+id: "Software.Jenkins"
+name: "Jenkins"
+description: "Installs the latest version of Jenkins on RHEL/CENTOS"
+publishStatus: "PUBLISHED"
+publishStatusName: "Published"
+schema:
+  fields:
+  - id: "host"
+    label: "Container"
+    description: ""
+    dataType:
+      type: "ref"
+      componentTypeId: "com.vmware.csp.iaas.blueprint.service"
+      classId: "Infrastructure.Machine.Schema"
+      label: "Machine"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "visible"
+        value:
+          type: "constantClause"
+          value:
+            type: "boolean"
+            value: false
+    isMultiValued: false
+  - id: "Jenkins_URL"
+    label: "Jenkins_URL"
+    description: "The URL to my Jenkins install"
+    dataType:
+      type: "primitive"
+      typeId: "STRING"
+    state:
+      dependencies: []
+      facets:
+      - type: "derivedValue"
+        value:
+          type: "constant"
+      - type: "editable"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: false
+    isMultiValued: false
+containerFieldId: "host"
+lifecycleTasks:
+- createdDate: "2016-03-22T23:41:39.017Z"
+  lastUpdated: "2016-03-23T00:24:29.459Z"
+  script:
+    scriptContent: "#!/bin/bash\nyum -y install wget\nwget -O /etc/yum.repos.d/jenkins.repo\
+      \ http://pkg.jenkins-ci.org/redhat/jenkins.repo\nrpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key\n\
+      yum -y install jenkins\nyum -y install java-1.7.0-openjdk\n\n"
+    isRebootAfter: false
+    scriptTypeId: "Bash"
+  taskDescriptorRef:
+    id: "INSTALL"
+    label: "Install"
+- createdDate: "2016-03-22T23:41:39.017Z"
+  lastUpdated: "2016-03-23T00:24:29.459Z"
+  script:
+    scriptContent: "#!/bin/bash\nsystemctl start jenkins\nsystemctl status jenkins"
+    isRebootAfter: false
+    scriptTypeId: "Bash"
+  taskDescriptorRef:
+    id: "START"
+    label: "Start"
+- createdDate: "2016-03-22T23:41:39.017Z"
+  lastUpdated: "2016-03-23T00:24:29.459Z"
+  script:
+    scriptContent: "#!/bin/bash\nsystemctl enable jenkins\n#Get My IP adress and store\
+      \ as variable\nmy_ip=$(hostname  -I | cut -f1 -d' ')\necho my IP address is\
+      \ $my_ip\nJenkins_URL=http://$my_ip:8080\n"
+    isRebootAfter: false
+    scriptTypeId: "Bash"
+  taskDescriptorRef:
+    id: "CONFIGURE"
+    label: "Configure"

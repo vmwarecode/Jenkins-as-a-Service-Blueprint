@@ -1,0 +1,69 @@
+id: Jenkins
+name: Jenkins
+description: Jenkins Server running on RHEL/CENTOS
+status: PUBLISHED
+components:
+  CentOS7:
+    type: Infrastructure.CatalogItem.Machine.Virtual.vSphere
+    data:
+      _cluster:
+        fixed: 1
+        min: 1
+      action:
+        fixed: LinkedClone
+      allow_storage_policies:
+        fixed: false
+      blueprint_type:
+        fixed: '1'
+      cpu:
+        fixed: 1
+        min: 1
+      description: 'CentOS7 VM. '
+      disks:
+      - capacity: 16
+        custom_properties: null
+        id: 1458690614034
+        initial_location: ''
+        is_clone: true
+        label: Hard disk 1
+        storage_reservation_policy: ''
+        userCreated: false
+        volumeId: 0
+      display_location:
+        fixed: false
+      guest_customization_specification: Linux
+      machine_prefix:
+        fixed:
+          id: Use group default
+      max_network_adapters: {}
+      max_volumes: {}
+      memory:
+        fixed: 2048
+        min: 2048
+      provisioning_workflow:
+        fixed:
+          id: CloneWorkflow
+          label: CloneWorkflow
+      security_groups: []
+      security_tags: []
+      source_machine:
+        fixed:
+          id: 93dc1859-8843-49bb-8e81-323846c584ea
+          label: CentOS7
+      source_machine_external_snapshot:
+        fixed: 6
+      source_machine_name:
+        fixed: CentOS7
+      source_machine_vmsnapshot:
+        fixed:
+          id: '18'
+      storage:
+        fixed: 16
+        min: 16
+  Jenkins:
+    type: Software.Jenkins
+    data:
+      host: ${_resource~CentOS7}
+layout:
+  CentOS7: 0,0
+  Jenkins: 0,0
